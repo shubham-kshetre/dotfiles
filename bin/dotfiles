@@ -149,7 +149,7 @@ function macos_setup() {
   # Check if Homebrew is installed
   if ! command -v brew >/dev/null 2>&1; then
     _task "Installing Homebrew"
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   fi
   # Now install packages with brew as needed, for example:
   _task "Installing Ansible"
