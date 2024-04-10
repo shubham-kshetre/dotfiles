@@ -163,15 +163,7 @@ function macos_setup() {
   _cmd "brew install python3"
   # Add more brew installation commands as needed
 
-  # Setup and use a Python virtual environment for package installations
-  _task "Setting up Python virtual environment for package installation"
-  python3 -m venv "$DOTFILES_DIR/venv"
-  source "$DOTFILES_DIR/venv/bin/activate"
-  _task "Upgrade pip"
-  _cmd "pip3 install --upgrade pip"
-  _task "Installing Python packages within virtual environment"
-  _cmd "pip install watchdog"
-  #deactivate  # Exit the virtual environment
+  brew install libyaml
 }
 
 update_ansible_galaxy() {
