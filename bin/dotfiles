@@ -163,7 +163,7 @@ function macos_setup() {
   _cmd "brew install python3"
   # Add more brew installation commands as needed
 
-  _cmd "pip3 install watchdog"
+  _cmd "pip3 --user install watchdog"
 }
 
 update_ansible_galaxy() {
