@@ -171,7 +171,7 @@ function macos_setup() {
   _cmd "pip3 install --upgrade pip"
   _task "Installing Python packages within virtual environment"
   _cmd "pip install watchdog"
-  deactivate  # Exit the virtual environment
+  #deactivate  # Exit the virtual environment
 }
 
 update_ansible_galaxy() {
