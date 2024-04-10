@@ -116,7 +116,7 @@ function ubuntu_setup() {
   fi
 
   _task "Setting Locale"
-  _cmd "sudo update-locale LANG=en_US.UTF-8"
+  export LANG="en_US.UTF-8"
 }
 
 function arch_setup() {
@@ -162,6 +162,9 @@ function macos_setup() {
   _task "Installing Python3"
   _cmd "brew install python3"
   # Add more brew installation commands as needed
+
+  _task "Ensuring Python packages, including watchdog, are installed"
+  _cmd "pip3 install watchdog"
 }
 
 update_ansible_galaxy() {
