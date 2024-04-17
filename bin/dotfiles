@@ -161,35 +161,12 @@ function macos_setup() {
   _task "Installing Ansible"
   _cmd "brew install ansible"
 
-  # Install Python3
-  _task "Installing Python3"
-  _cmd "brew install python3"
-
-  # Create a virtual environment named 'dotfile_venv'
-  _task "Creating virtual environment"
-  _cmd "python3 -m venv ~/dotfiles_venv"
-
-  # Activate the virtual environment
-  _task "Activating virtual environment"
-  source ~/dotfiles_venv/bin/activate
-
-  # Ensure pip is upgraded
-  _task "Upgrading pip"
-  _cmd "pip install --upgrade pip"
-
   # Install watchdog within the virtual environment
   _task "Installing watchdog"
   _cmd "pip install watchdog"
-
-  # Deactivate the virtual environment
-  deactivate
 }
 
 update_ansible_galaxy() {
-  # Activate the virtual environment
-  _task "Activating virtual environment"
-  source ~/dotfiles_venv/bin/activate
-
   local os=$1
   local os_requirements=""
   _task "Updating Ansible Galaxy"
@@ -198,9 +175,6 @@ update_ansible_galaxy() {
     os_requirements="$DOTFILES_DIR/requirements/$os.yml"
   fi
   _cmd "ansible-galaxy install -r $DOTFILES_DIR/requirements/common.yml $os_requirements"
-
-  # Deactivate the virtual environment
-  deactivate
 }
 
 _task "Loading Setup for detected OS: $OS_TYPE"
@@ -246,23 +220,15 @@ else
   _cmd "git -C $DOTFILES_DIR pull --quiet"
 fi
 
-# Activate the virtual environment
-_task "Activating virtual environment"
-source ~/dotfiles_venv/bin/activate
-
 pushd "$DOTFILES_DIR" 2>&1 > /dev/null
 update_ansible_galaxy $OS_TYPE
 
 _task "Running playbook"; _task_done
 if [[ -f $VAULT_SECRET ]]; then
-  source ~/dotfiles_venv/bin/activate && ansible-playbook --vault-password-file $VAULT_SECRET "$DOTFILES_DIR/main.yml" "$@"
+  ansible-playbook --vault-password-file $VAULT_SECRET "$DOTFILES_DIR/main.yml" "$@"
 else
-  source ~/dotfiles_venv/bin/activate && ansible-playbook "$DOTFILES_DIR/main.yml" "$@"
+  ansible-playbook "$DOTFILES_DIR/main.yml" "$@"
 fi
-
-# Activate the virtual environment
-_task "Activating virtual environment"
-source ~/dotfiles_venv/bin/activate
 
 popd 2>&1 > /dev/null
 
@@ -271,8 +237,5 @@ if ! [[ -f "$IS_FIRST_RUN" ]]; then
   echo -e "${ARROW} ${CYAN}Please reboot your computer to complete the setup.${NC}"
   touch "$IS_FIRST_RUN"
 fi
-
-# Deactivate the virtual environment
-deactivate
 
 # vi:ft=sh:
