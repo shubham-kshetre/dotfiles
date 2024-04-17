@@ -157,13 +157,21 @@ function macos_setup() {
     eval "$(/opt/homebrew/bin/brew shellenv)"
   fi
 
+  # Install Python3.10
+  _task "Installing Python3.10"
+  _cmd "brew install python@3.10"
+
+  # Install Python3
+  _task "Installing Python"
+  _cmd "brew install python"
+
   # Install Ansible
   _task "Installing Ansible"
   _cmd "brew install ansible"
 
   # Install watchdog within the virtual environment
   _task "Installing watchdog"
-  _cmd "pip3 install watchdog"
+  _cmd "pip3.10 install watchdog"
 }
 
 update_ansible_galaxy() {
