@@ -163,7 +163,7 @@ function macos_setup() {
 
   # Install watchdog within the virtual environment
   _task "Installing watchdog"
-  _cmd "pip install watchdog"
+  _cmd "pip3 install watchdog"
 }
 
 update_ansible_galaxy() {
