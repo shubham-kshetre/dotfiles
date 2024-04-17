@@ -196,6 +196,10 @@ update_ansible_galaxy() {
   _cmd "ansible-galaxy install -r $DOTFILES_DIR/requirements/common.yml $os_requirements"
 }
 
+# Activate the virtual environment
+_task "Activating virtual environment"
+source ~/dotfiles_venv/bin/activate
+
 _task "Loading Setup for detected OS: $OS_TYPE"
 case $OS_TYPE in
   Linux)
@@ -239,10 +243,6 @@ else
   _cmd "git -C $DOTFILES_DIR pull --quiet"
 fi
 
-# Activate the virtual environment
-_task "Activating virtual environment"
-source ~/dotfiles_venv/bin/activate
-
 pushd "$DOTFILES_DIR" 2>&1 > /dev/null
 update_ansible_galaxy $OS_TYPE
 
@@ -260,8 +260,5 @@ if ! [[ -f "$IS_FIRST_RUN" ]]; then
   echo -e "${ARROW} ${CYAN}Please reboot your computer to complete the setup.${NC}"
   touch "$IS_FIRST_RUN"
 fi
-
-# Deactivate the virtual environment
-deactivate
 
 # vi:ft=sh:
