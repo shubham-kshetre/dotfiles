@@ -200,10 +200,6 @@ update_ansible_galaxy() {
   _cmd "ansible-galaxy install -r $DOTFILES_DIR/requirements/common.yml $os_requirements"
 }
 
-# Activate the virtual environment
-_task "Activating virtual environment"
-source ~/dotfiles_venv/bin/activate
-
 _task "Loading Setup for detected OS: $OS_TYPE"
 case $OS_TYPE in
   Linux)
