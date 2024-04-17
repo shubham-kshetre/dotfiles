@@ -156,14 +156,33 @@ function macos_setup() {
     echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
     eval "$(/opt/homebrew/bin/brew shellenv)"
   fi
-  # Now install packages with brew as needed, for example:
+
+  # Install Ansible
   _task "Installing Ansible"
   _cmd "brew install ansible"
+
+  # Install Python3
   _task "Installing Python3"
   _cmd "brew install python3"
-  # Add more brew installation commands as needed
 
-  _cmd "pip3 --user --break-system-packages install watchdog"
+  # Create a virtual environment named 'dotfile_venv'
+  _task "Creating virtual environment"
+  _cmd "python3 -m venv ~/dotfiles_venv"
+
+  # Activate the virtual environment
+  _task "Activating virtual environment"
+  source ~/dotfiles_venv/bin/activate
+
+  # Ensure pip is upgraded
+  _task "Upgrading pip"
+  _cmd "pip install --upgrade pip"
+
+  # Install watchdog within the virtual environment
+  _task "Installing watchdog"
+  _cmd "pip install watchdog"
+
+  # Deactivate the virtual environment
+  deactivate
 }
 
 update_ansible_galaxy() {
