@@ -253,14 +253,11 @@ source ~/dotfiles_venv/bin/activate
 pushd "$DOTFILES_DIR" 2>&1 > /dev/null
 update_ansible_galaxy $OS_TYPE
 
-# Deactivate the virtual environment
-deactivate
-
 _task "Running playbook"; _task_done
 if [[ -f $VAULT_SECRET ]]; then
-  source ~/dotfiles_venv/bin/activate && ansible-playbook --vault-password-file $VAULT_SECRET "$DOTFILES_DIR/main.yml" "$@" && deactivate
+  source ~/dotfiles_venv/bin/activate && ansible-playbook --vault-password-file $VAULT_SECRET "$DOTFILES_DIR/main.yml" "$@"
 else
-  source ~/dotfiles_venv/bin/activate && ansible-playbook "$DOTFILES_DIR/main.yml" "$@" && deactivate
+  source ~/dotfiles_venv/bin/activate && ansible-playbook "$DOTFILES_DIR/main.yml" "$@"
 fi
 
 # Activate the virtual environment
