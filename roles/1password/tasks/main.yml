@@ -1,7 +1,13 @@
 ---
+- name: Detect Operating System
+  ansible.builtin.command: "uname -s"
+  register: os_type
+  changed_when: false
+  check_mode: no
+
+- name: Run macOS Tasks
+  ansible.builtin.import_tasks: macOS.yml
+  when: os_type.stdout == 'Darwin'
 - name: Run Ubuntu Tasks
   ansible.builtin.import_tasks: ubuntu.yml
   when: ansible_os_family == 'Debian'
-- name: Run macOS Tasks
-  ansible.builtin.import_tasks: macOS.yml
-  when: ansible_os_family == 'Darwin'
