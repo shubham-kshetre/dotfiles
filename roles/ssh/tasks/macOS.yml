@@ -1,0 +1,10 @@
+---
+- name: Install openssh on macOS
+  hosts: 127.0.0.1
+  connection: local
+  gather_facts: no
+  tasks:
+  - name: Install openssh
+    homebrew:
+      name: openssh
+      state: present
