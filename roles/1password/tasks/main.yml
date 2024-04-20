@@ -1,14 +1,22 @@
 ---
-- name: Detect Operating System
-  ansible.builtin.command: "uname -s"
-  register: os_type
-  changed_when: false
-  check_mode: no
+- hosts: localhost
+  connection: local
+  gather_facts: no  # You might need this on if you use ansible facts
 
-- name: Include macOS-specific tasks dynamically
-  ansible.builtin.include_tasks: macOS.yml
-  when: os_type.stdout == 'Darwin'
+  tasks:
+    - name: Detect Operating System
+      command: "uname -s"
+      register: os_type
+      changed_when: false
 
-- name: Include Ubuntu-specific tasks dynamically
-  ansible.builtin.include_tasks: ubuntu.yml
-  when: ansible_os_family == 'Debian'
+    - name: Set platform variable
+      set_fact:
+        platform: "{{ 'macOS' if os_type.stdout == 'Darwin' else 'linux' }}"
+
+    - name: Debug platform variable
+      debug:
+        var: platform
+
+    - name: Include OS-specific tasks dynamically
+      include_tasks: "pre_tasks/detect_{{ platform }}.yml"
+      when: platform == 'macOS' or platform == 'ubuntu'
