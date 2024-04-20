@@ -5,9 +5,10 @@
   changed_when: false
   check_mode: no
 
-- name: Run macOS Tasks
-  ansible.builtin.import_tasks: macOS.yml
+- name: Include macOS-specific tasks dynamically
+  ansible.builtin.include_tasks: macOS.yml
   when: os_type.stdout == 'Darwin'
-- name: Run Ubuntu Tasks
-  ansible.builtin.import_tasks: ubuntu.yml
+
+- name: Include Ubuntu-specific tasks dynamically
+  ansible.builtin.include_tasks: ubuntu.yml
   when: ansible_os_family == 'Debian'
