@@ -1,7 +1,5 @@
 ---
-- name: "lua installation"
-  community.general.homebrew:
+- name: Install Lua
+  homebrew:
     name: lua
     state: present
-    update_homebrew: true
-  become: true
