@@ -1,26 +1,8 @@
 ---
-- hosts: localhost
-  connection: local
-  gather_facts: no  # You might need this on if you use ansible facts
-
-  tasks:
-    - name: Detect Operating System
-      command: "uname -s"
-      register: os_type
-      changed_when: false
-
-    - name: Set platform variable
-      set_fact:
-        platform: "{{ 'macOS' if os_type.stdout == 'Darwin' else 'ubuntu' }}"
-
-    - name: Debug platform variable
-      debug:
-        var: platform
-
-    - name: Include OS-specific tasks dynamically
-      ansible.builtin.import_tasks: macOS.yml
-      when: platform == 'macOS'
-
-    - name: Include OS-specific tasks dynamically
-      ansible.builtin.import_tasks: ubuntu.yml
-      when: platform == 'ubuntu'
+---
+- name: Run Ubuntu Tasks
+  ansible.builtin.import_tasks: ubuntu.yml
+  when: ansible_os_family == 'Debian'
+- name: Run macOS Tasks
+  ansible.builtin.import_tasks: macOS.yml
+  when: ansible_os_family == 'Darwin'
