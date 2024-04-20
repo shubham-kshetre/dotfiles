@@ -11,12 +11,16 @@
 
     - name: Set platform variable
       set_fact:
-        platform: "{{ 'macOS' if os_type.stdout == 'Darwin' else 'linux' }}"
+        platform: "{{ 'macOS' if os_type.stdout == 'Darwin' else 'ubuntu' }}"
 
     - name: Debug platform variable
       debug:
         var: platform
 
     - name: Include OS-specific tasks dynamically
-      include_tasks: "pre_tasks/detect_{{ platform }}.yml"
-      when: platform == 'macOS' or platform == 'ubuntu'
+      ansible.builtin.import_tasks: macOS.yml
+      when: platform == 'macOS'
+
+    - name: Include OS-specific tasks dynamically
+      ansible.builtin.import_tasks: ubuntu.yml
+      when: platform == 'ubuntu'
