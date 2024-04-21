@@ -97,6 +97,10 @@ function ubuntu_setup() {
     _cmd "sudo apt-get update"
     _cmd "sudo apt-get install -y software-properties-common"
     _cmd "sudo apt-add-repository -y ppa:ansible/ansible"
+
+    _cmd "echo "tzdata tzdata/Areas select Asia" | sudo debconf-set-selections"
+    _cmd "echo "tzdata tzdata/Zones/Asia select Kolkata" | sudo debconf-set-selections"
+
     _cmd "sudo apt-get update"
     _cmd "sudo apt-get install -y ansible"
     _cmd "sudo apt-get install python3-argcomplete"
