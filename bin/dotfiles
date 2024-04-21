@@ -97,7 +97,7 @@ function ubuntu_setup() {
     _cmd "sudo apt-get update"
 
     _cmd "sudo ln -sf /usr/share/zoneinfo/Asia/Kolkata /etc/localtime"
-    _cmd "sudo DEBIAN_FRONTEND=noninteractive apt install -y software-properties-common python3-pip"
+    _cmd "sudo DEBIAN_FRONTEND=noninteractive apt install -y software-properties-common"
 
     _cmd "sudo add-apt-repository --yes --update ppa:ansible/ansible"
 
