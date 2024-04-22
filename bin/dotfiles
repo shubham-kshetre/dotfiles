@@ -119,6 +119,11 @@ function ubuntu_setup() {
     _cmd "pip3 install watchdog"
   fi
 
+  if ! command -v git >/dev/null 2>&1; then
+    _task "Installing Git"
+    _cmd "sudo apt-get install -y git"
+  fi
+
   _task "Setting Locale"
   export LANG="en_US.UTF-8"
 }
